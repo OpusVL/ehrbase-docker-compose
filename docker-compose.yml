@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  ehrdb:
+    image: ehrbaseorg/ehrbase-postgres:latest
+    volumes:
+      - "./postgres/:/var/lib/postgres:rw"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${EHRBASE_DB}", "-U", "${EHRBASE_USER}"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      EHRBASE_USER: ${EHRBASE_USER}
+      EHRBASE_PASSWORD: ${EHRBASE_PASSWORD}
+    networks:
+      - ehrbase_net
+    restart: always
+
+  ehrbase:
+    image: ehrbaseorg/ehrbase:next
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      SYSTEM_NAME: ${SYSTEM_NAME}
+    ports:
+      - "8080:8080"
+    networks:
+      - ehrbase_net
+    restart: always
+
+networks:
+  ehrbase_net:
