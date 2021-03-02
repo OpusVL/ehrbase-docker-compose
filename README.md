@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This was a precursor to the project [OpusVL/C19-bundle](https://github.com/OpusVL/C19-bundle) which now contains a more up to date version of ehrbase and ehrdb.
+
 # Open Electronic Health Record Platform
 
 https://ehrbase.org/
